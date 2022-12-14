@@ -1,7 +1,7 @@
 import { cr, rgb, asset } from "https://js.sabae.cc/aframe.js";
 export { cr, rgb, asset };
 
-const scene = cr("a-scene", document.body);
+export const scene = cr("a-scene", document.body);
 document.body.style.backgroundColor = "black";
 
 export const sphere = (x, y, z, size = .5, color = "red") => {
