@@ -2,6 +2,7 @@
 
 ## sample
 
+[DEMO](https://taisukef.github.io/vr-spiral/)
 ```html
 <script type="module">
 import * as eg from "https://js.sabae.cc/egvr.js";
@@ -15,7 +16,6 @@ for (let i = 0; i < 200; i++) {
   eg.sphere(x, i / 30, y, s, eg.rgb(i * 2, 0, 30));
 }
 </script>
-
 ```
 
 ## blog
