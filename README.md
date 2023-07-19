@@ -18,6 +18,10 @@ for (let i = 0; i < 200; i++) {
 </script>
 ```
 
+## slide
+
+- [VR入門 PDF](https://code4fukui.github.io/egvr/VR-firststep.pdf)
+
 ## blog
 
 - [QuestでもWebAR解禁! 福井県高校にてVR入門、体験/検索/発想/創造](https://fukuno.jig.jp/3792)
