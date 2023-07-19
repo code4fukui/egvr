@@ -4,6 +4,15 @@ export { cr, rgb, asset };
 export const scene = cr("a-scene", document.body);
 document.body.style.backgroundColor = "black";
 
+const assets = {};
+const getAsset = (url) => {
+  const a = assets[url];
+  if (a) return a;
+  const a2 = asset(url);
+  assets[url] = a2;
+  return a2;
+};
+
 export const sphere = (x, y, z, size = .5, color = "red") => {
   if (x === undefined) {
     alert(`eg.sphere(x, y, z, size = .5, color = "red")`);
@@ -37,6 +46,19 @@ export const line = (x, y, z, dx, dy, dz, color = "white") => {
   s.setAttribute("line", `start: ${x} ${y} ${z}; end: ${x + dx} ${y + dy} ${z + dz}; color: ${color}`);
   return s;
 };
+export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0) => {
+  if (asset_or_url === undefined) {
+    alert(`eg.model(url, y, z, ry)`);
+    return;
+  }
+  const aid = typeof asset_or_url == "string" ? getAsset(asset_or_url) : asset_or_url;
+  const obj = cr("a-entity", scene);
+  obj.setAttribute("gltf-model", aid);
+  obj.setAttribute("position", { x, y, z });
+  obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
+  return obj;
+};
+
 export const help = () => {
   alert("eg.sphere(x, y, z) / eg.box(x, y, z) / eg.line(x, y, z, dx, dy, dz)");
 };
