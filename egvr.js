@@ -46,9 +46,9 @@ export const line = (x, y, z, dx, dy, dz, color = "white") => {
   s.setAttribute("line", `start: ${x} ${y} ${z}; end: ${x + dx} ${y + dy} ${z + dz}; color: ${color}`);
   return s;
 };
-export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0) => {
+export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1) => {
   if (asset_or_url === undefined) {
-    alert(`eg.model(url, y, z, ry)`);
+    alert(`eg.model(url, y, z, ry, size)`);
     return;
   }
   const aid = typeof asset_or_url == "string" ? getAsset(asset_or_url) : asset_or_url;
@@ -56,6 +56,7 @@ export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0) => {
   obj.setAttribute("gltf-model", aid);
   obj.setAttribute("position", { x, y, z });
   obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
+  obj.setAttribute("scale", { x: size, y: size, z: size });
   return obj;
 };
 
