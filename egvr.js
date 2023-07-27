@@ -1,8 +1,10 @@
 import { cr, rgb, asset } from "https://js.sabae.cc/aframe.js";
 export { cr, rgb, asset };
 
-export const scene = cr("a-scene", document.body);
-document.body.style.backgroundColor = "black";
+export const scene = cr("a-scene");
+scene.setAttribute("renderer", "colorManagement: true");
+document.body.appendChild(scene);
+document.body.style.backgroundColor = "#181818";
 
 const assets = {};
 const getAsset = (url) => {
