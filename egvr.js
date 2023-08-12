@@ -6,6 +6,11 @@ scene.setAttribute("renderer", "colorManagement: true");
 document.body.appendChild(scene);
 document.body.style.backgroundColor = "#181818";
 
+// for mouse event
+const mouseCursor = cr("a-entity");
+mouseCursor.setAttribute("cursor", "rayOrigin: mouse");
+scene.appendChild(mouseCursor);
+
 const assets = {};
 const getAsset = (url) => {
   const a = assets[url];

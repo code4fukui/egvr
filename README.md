@@ -18,6 +18,24 @@ for (let i = 0; i < 200; i++) {
 </script>
 ```
 
+[Interactive DEMO](https://code4fukui.github.io/egvr/interactive.html)
+```html
+<script type="module">
+import * as eg from "https://js.sabae.cc/egvr.js";
+
+eg.box(0, .5, -5, 1, eg.hsl(180, 1, 0.5)).onclick = (e) => {
+  e.target.setAttribute("visible", !e.target.getAttribute("visible"));
+};
+
+eg.model("https://code4fukui.github.io/vr-kanazawa-it/kanta.glb", 1, 0, -5).onclick = (e) => {
+  e.target.setAttribute("position", { x: 1, y: 1, z: -5 });
+  setTimeout(() => {
+    e.target.setAttribute("position", { x: 1, y: 0, z: -5 });
+  }, 1000);
+};
+</script>
+```
+
 ## slide
 
 - [VR入門 PDF](https://code4fukui.github.io/egvr/VR-firststep.pdf)
