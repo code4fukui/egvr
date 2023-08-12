@@ -66,6 +66,20 @@ export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1) => {
   obj.setAttribute("scale", { x: size, y: size, z: size });
   return obj;
 };
+export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white") => {
+  if (s === undefined) {
+    alert(`eg.text(s, y, z, size = 5, color = "white")`);
+    return;
+  }
+  const obj = cr("a-text", scene);
+  obj.setAttribute("value", s);
+  obj.setAttribute("position", { x, y, z });
+  //obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
+  //obj.setAttribute("scale", { x: size, y: size, z: size });
+  obj.setAttribute("width", size);
+  obj.setAttribute("color", color);
+  return obj;
+};
 
 export const help = () => {
   alert("eg.sphere(x, y, z) / eg.box(x, y, z) / eg.line(x, y, z, dx, dy, dz)");
