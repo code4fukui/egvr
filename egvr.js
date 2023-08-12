@@ -81,6 +81,16 @@ export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = 
   obj.setAttribute("align", align);
   return obj;
 };
+export const sky = (src, radius = 500) => {
+  if (src === undefined) {
+    alert(`eg.sky(src, radius = 500)`);
+    return;
+  }
+  const sky = cr("a-sky", scene);
+  sky.setAttribute("src", src);
+  sky.setAttribute("radius", radius);
+  return sky;
+};
 
 export const help = () => {
   alert("eg.sphere(x, y, z) / eg.box(x, y, z) / eg.line(x, y, z, dx, dy, dz)");
