@@ -81,15 +81,21 @@ export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = 
   obj.setAttribute("align", align);
   return obj;
 };
+let skyobj = null;
 export const sky = (src, radius = 500) => {
   if (src === undefined) {
     alert(`eg.sky(src, radius = 500)`);
     return;
   }
-  const sky = cr("a-sky", scene);
-  sky.setAttribute("src", src);
-  sky.setAttribute("radius", radius);
-  return sky;
+  if (skyobj == null) {
+    const sky = cr("a-sky", scene);
+    sky.setAttribute("src", src);
+    sky.setAttribute("radius", radius);  
+    skyobj = sky;
+  } else {
+    skyobj.setAttribute("src", src);
+  }
+  return skyobj;
 };
 
 export const help = () => {
