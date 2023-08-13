@@ -1,5 +1,7 @@
 import { cr, rgb, asset } from "https://js.sabae.cc/aframe.js";
 export { cr, rgb, asset };
+export { waitClick } from "https://js.sabae.cc/waitClick.js";
+export { sleep } from "https://js.sabae.cc/sleep.js";
 
 export const scene = cr("a-scene");
 scene.setAttribute("renderer", "colorManagement: true");

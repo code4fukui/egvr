@@ -23,7 +23,7 @@ for (let i = 0; i < 200; i++) {
 <script type="module">
 import * as eg from "https://js.sabae.cc/egvr.js";
 
-eg.box(0, .5, -5, 1, eg.hsl(180, 1, 0.5)).onclick = (e) => {
+;eg.box(0, .5, -5, 1, eg.hsl(180, 1, 0.5)).onclick = (e) => {
   e.target.setAttribute("visible", !e.target.getAttribute("visible"));
 };
 
@@ -35,6 +35,8 @@ eg.model("https://code4fukui.github.io/vr-kanazawa-it/kanta.glb", 1, 0, -5).oncl
 };
 </script>
 ```
+
+[Game DEMO](https://code4fukui.github.io/egvr/game.html)
 
 ## slide
 
