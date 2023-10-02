@@ -83,6 +83,32 @@ export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = 
   obj.setAttribute("align", align);
   return obj;
 };
+export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false) => {
+  if (img === undefined) {
+    alert(`eg.image(img, x, y, z, w = 0.5, h = 0.5, circle = false)`);
+    return;
+  }
+	if (circle) {
+		const s = cr("a-cylinder", scene);
+		s.setAttribute("position", { x, y, z });
+		s.setAttribute("radius", w);
+		s.setAttribute("height", 0);
+		s.setAttribute("height", 0);
+		s.setAttribute("segments-radial", Math.floor(w * 64));
+		s.setAttribute("rotation", { x: 90, y: 0, z: 0 });
+		s.setAttribute("src", img);
+		return s;
+	} else {
+		const s = cr("a-plane", scene);
+		s.setAttribute("position", { x, y, z });
+		s.setAttribute("width", w);
+		s.setAttribute("height", h);
+		s.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+		s.setAttribute("src", img);
+		return s;
+	}
+};
+
 let skyobj = null;
 export const sky = (src, radius = 500) => {
   if (src === undefined) {
@@ -133,3 +159,13 @@ const hsl2rgb = (h, s, l) => {
   }
   return { r: r * 255 >> 0, g: g * 255 >> 0, b: b * 255 >> 0 };
 };
+
+// camera
+export const camera = cr("a-entity");
+//camera.setAttribute("camera", "active: true");
+camera.setAttribute('camera', 'active', true);
+camera.setAttribute("data-aframe-default-camera", true);
+camera.setAttribute("look-controls", "true");
+camera.setAttribute("wasd-controls", "true");
+camera.setAttribute("position", { x: 0, y: 1.6, z: 0 });
+scene.appendChild(camera);
