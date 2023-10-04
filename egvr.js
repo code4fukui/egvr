@@ -48,7 +48,7 @@ export const box = (x, y, z, size = .5, color = "green", parent) => {
   s.setAttribute("depth", size);
   return s;
 };
-export const line = (x, y, z, dx, dy, dz, color = "white") => {
+export const line = (x, y, z, dx, dy, dz, color = "white", parent) => {
   if (x === undefined) {
     alert(`eg.line(x, y, z, dx, dy, dz, color = "white")`);
     return;
@@ -57,7 +57,7 @@ export const line = (x, y, z, dx, dy, dz, color = "white") => {
   s.setAttribute("line", `start: ${x} ${y} ${z}; end: ${x + dx} ${y + dy} ${z + dz}; color: ${color}`);
   return s;
 };
-export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1) => {
+export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1, parent) => {
   if (asset_or_url === undefined) {
     alert(`eg.model(url, y, z, ry, size)`);
     return;
@@ -70,7 +70,7 @@ export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1) => {
   obj.setAttribute("scale", { x: size, y: size, z: size });
   return obj;
 };
-export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = "center") => {
+export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = "center", parent) => {
   if (s === undefined) {
     alert(`eg.text(s, y, z, size = 5, color = "white", align = "center")`);
     return;
@@ -85,7 +85,7 @@ export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = 
   obj.setAttribute("align", align);
   return obj;
 };
-export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false) => {
+export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false, parent) => {
   if (img === undefined) {
     alert(`eg.image(img, x, y, z, w = 0.5, h = 0.5, circle = false)`);
     return;
@@ -112,7 +112,7 @@ export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false) => {
 };
 
 let skyobj = null;
-export const sky = (src, radius = 500) => {
+export const sky = (src, radius = 500, parent) => {
   if (src === undefined) {
     alert(`eg.sky(src, radius = 500)`);
     return;
