@@ -22,23 +22,25 @@ const getAsset = (url) => {
   return a2;
 };
 
-export const sphere = (x, y, z, size = .5, color = "red") => {
+const parentOrScene = (p) => p === undefined ? scene : p;
+
+export const sphere = (x, y, z, size = .5, color = "red", parent) => {
   if (x === undefined) {
     alert(`eg.sphere(x, y, z, size = .5, color = "red")`);
     return;
   }
-  const s = cr("a-sphere", scene);
+  const s = cr("a-sphere", parentOrScene(parent));
   s.setAttribute("position", { x, y, z });
   s.setAttribute("color", color);
   s.setAttribute("radius", size / 2);
   return s;
 };
-export const box = (x, y, z, size = .5, color = "green") => {
+export const box = (x, y, z, size = .5, color = "green", parent) => {
   if (x === undefined) {
     alert(`eg.box(x, y, z, size = .5, color = "green")`);
     return;
   }
-  const s = cr("a-box", scene);
+  const s = cr("a-box", parentOrScene(parent));
   s.setAttribute("position", { x, y, z });
   s.setAttribute("color", color);
   s.setAttribute("width", size);
@@ -51,7 +53,7 @@ export const line = (x, y, z, dx, dy, dz, color = "white") => {
     alert(`eg.line(x, y, z, dx, dy, dz, color = "white")`);
     return;
   }
-  const s = cr("a-entity", scene);
+  const s = cr("a-entity", parentOrScene(parent));
   s.setAttribute("line", `start: ${x} ${y} ${z}; end: ${x + dx} ${y + dy} ${z + dz}; color: ${color}`);
   return s;
 };
@@ -61,7 +63,7 @@ export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1) => {
     return;
   }
   const aid = typeof asset_or_url == "string" ? getAsset(asset_or_url) : asset_or_url;
-  const obj = cr("a-entity", scene);
+  const obj = cr("a-entity", parentOrScene(parent));
   obj.setAttribute("gltf-model", aid);
   obj.setAttribute("position", { x, y, z });
   obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
@@ -73,7 +75,7 @@ export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = 
     alert(`eg.text(s, y, z, size = 5, color = "white", align = "center")`);
     return;
   }
-  const obj = cr("a-text", scene);
+  const obj = cr("a-text", parentOrScene(parent));
   obj.setAttribute("value", s);
   obj.setAttribute("position", { x, y, z });
   //obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
@@ -89,7 +91,7 @@ export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false) => {
     return;
   }
 	if (circle) {
-		const s = cr("a-cylinder", scene);
+		const s = cr("a-cylinder", parentOrScene(parent));
 		s.setAttribute("position", { x, y, z });
 		s.setAttribute("radius", w);
 		s.setAttribute("height", 0);
@@ -99,7 +101,7 @@ export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false) => {
 		s.setAttribute("src", img);
 		return s;
 	} else {
-		const s = cr("a-plane", scene);
+		const s = cr("a-plane", parentOrScene(parent));
 		s.setAttribute("position", { x, y, z });
 		s.setAttribute("width", w);
 		s.setAttribute("height", h);
@@ -116,7 +118,7 @@ export const sky = (src, radius = 500) => {
     return;
   }
   if (skyobj == null) {
-    const sky = cr("a-sky", scene);
+    const sky = cr("a-sky", parentOrScene(parent));
     sky.setAttribute("src", src);
     sky.setAttribute("radius", radius);  
     skyobj = sky;
@@ -169,3 +171,13 @@ camera.setAttribute("look-controls", "true");
 camera.setAttribute("wasd-controls", "true");
 camera.setAttribute("position", { x: 0, y: 1.6, z: 0 });
 scene.appendChild(camera);
+
+export const group = (x, y, z) => {
+  const c = cr("a-entity");
+  if (x !== undefined) {
+    c.setAttribute("position", { x, y, z });
+  }
+  return c;
+};
+
+
