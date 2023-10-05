@@ -5,6 +5,11 @@ export { sleep } from "https://js.sabae.cc/sleep.js";
 
 export const scene = cr("a-scene");
 scene.setAttribute("renderer", "colorManagement: true");
+
+// camera
+export const camera = cr("a-camera");
+scene.appendChild(camera);
+
 document.body.appendChild(scene);
 document.body.style.backgroundColor = "#181818";
 
@@ -162,16 +167,6 @@ const hsl2rgb = (h, s, l) => {
   return { r: r * 255 >> 0, g: g * 255 >> 0, b: b * 255 >> 0 };
 };
 
-// camera
-export const camera = cr("a-entity");
-//camera.setAttribute("camera", "active: true");
-camera.setAttribute('camera', 'active', true);
-camera.setAttribute("data-aframe-default-camera", true);
-camera.setAttribute("look-controls", "true");
-camera.setAttribute("wasd-controls", "true");
-camera.setAttribute("position", { x: 0, y: 1.6, z: 0 });
-scene.appendChild(camera);
-
 export const group = (x, y, z) => {
   const c = cr("a-entity");
   if (x !== undefined) {
@@ -180,4 +175,13 @@ export const group = (x, y, z) => {
   return c;
 };
 
-
+export const isNear = (o2, distance = 1.0) => {
+  const o1 = camera;
+  const p1 = o1.getAttribute("position");
+  const p2 = o2.getAttribute("position");
+  const dx = p1.x - p2.x;
+  const dy = p1.y - p2.y;
+  const dz = p1.z - p2.z;
+  const d = dx * dx + dy * dy + dz * dz;
+  return d < distance * distance;
+};
