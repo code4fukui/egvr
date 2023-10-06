@@ -104,6 +104,7 @@ export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false, parent) =>
 		s.setAttribute("segments-radial", Math.floor(w * 64));
 		s.setAttribute("rotation", { x: 90, y: 0, z: 0 });
 		s.setAttribute("src", img);
+    s.setAttribute("transparent", "true");
 		return s;
 	} else {
 		const s = cr("a-plane", parentOrScene(parent));
@@ -112,6 +113,7 @@ export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false, parent) =>
 		s.setAttribute("height", h);
 		s.setAttribute("rotation", { x: 0, y: 0, z: 0 });
 		s.setAttribute("src", img);
+    s.setAttribute("transparent", "true");
 		return s;
 	}
 };
