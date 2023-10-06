@@ -75,11 +75,33 @@ export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1, paren
   obj.setAttribute("scale", { x: size, y: size, z: size });
   return obj;
 };
-export const text = (s, x = 0, y = 0, z = 0, size = 5, color = "white", align = "center", parent) => {
+export const text = (s, x, y, z, w = 1.0, color = "white", size = 128, parent) => {
   if (s === undefined) {
-    alert(`eg.text(s, y, z, size = 5, color = "white", align = "center")`);
+    alert(`eg.text(s, y, z, width = 1.0, color = "white", size = 128)`);
     return;
   }
+  const canvas = document.createElement("canvas");
+  const g = canvas.getContext("2d");
+  g.font = `bold ${size}px sans-serif`;
+  const m = g.measureText(s);
+  const sw = m.width;
+  const sh = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+  canvas.width = sw;
+  canvas.height = Math.floor(sh * 1.1);
+  g.font = `bold ${size}px sans-serif`;
+  g.fillStyle = color;
+  g.fillText(s, 0, size - m.actualBoundingBoxDescent);
+  const img = canvas.toDataURL();
+  // w *= .2; // difference from old textASCII
+  const h = w / canvas.width * canvas.height;
+  return image(img, x, y, z, w, h, false, parent);
+};
+export const textASCII = (s, x = 0, y = 0, z = 0, width = 1.0, color = "white", align = "center", parent) => {
+  if (s === undefined) {
+    alert(`eg.textASCII(s, y, z, size = 5, color = "white", align = "center")`);
+    return;
+  }
+  const size = width * 5; // difference from text
   const obj = cr("a-text", parentOrScene(parent));
   obj.setAttribute("value", s);
   obj.setAttribute("position", { x, y, z });
