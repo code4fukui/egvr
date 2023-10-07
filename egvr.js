@@ -87,7 +87,7 @@ export const text = (s, x, y, z, w = 1.0, color = "white", size = 128, parent) =
   const sw = m.width;
   const sh = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
   canvas.width = sw;
-  canvas.height = Math.floor(sh * 1.1);
+  canvas.height = Math.floor(sh * 2);
   g.font = `bold ${size}px sans-serif`;
   g.fillStyle = color;
   g.fillText(s, 0, size - m.actualBoundingBoxDescent);
@@ -208,4 +208,22 @@ export const isNear = (o2, distance = 1.0) => {
   const dz = p1.z - p2.z;
   const d = dx * dx + dy * dy + dz * dz;
   return d < distance * distance;
+};
+
+export const cls = () => {
+  const remlist = [];
+  for (const ele of scene.children) {
+    if (
+      ele.getAttribute("aframe-injected") !== "" &&
+      ele.tagName !== "A-CAMERA" &&
+      ele.tagName !== "CANVAS" &&
+      ele.tagName !== "DIV" &&
+      !(ele.tagName === "A-ENTITY" && ele.getAttribute("raycaster") !== null)
+    ) {
+      remlist.push(ele);
+    }
+  }
+  for (let i = 0; i < remlist.length; i++) {
+    scene.removeChild(remlist[i]);
+  }
 };
