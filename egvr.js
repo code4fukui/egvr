@@ -5,6 +5,7 @@ export { sleep } from "https://js.sabae.cc/sleep.js";
 
 export const scene = cr("a-scene");
 scene.setAttribute("renderer", "colorManagement: true");
+scene.setAttribute("renderer", "sortObjects: true");
 
 // camera
 export const camera = cr("a-camera");
@@ -40,6 +41,21 @@ const getAsset = (url) => {
 
 const parentOrScene = (p) => p === undefined ? scene : p;
 
+const setColor = (obj, color) => {
+  if (color == "occ") {
+    obj.addEventListener("loaded", () => {
+      const mesh = obj.getObject3D("mesh");
+      console.log(mesh, mesh.renderOrder)
+      mesh.material.colorWrite = false;
+      mesh.renderOrder = -1;
+      //obj.components.geometry.data = newGeometryData;
+      //obj.components.geometry.update(obj.components.geometry.data);
+    });
+    return;
+  }
+  obj.setAttribute("color", color);
+};
+
 export const sphere = (x, y, z, size = .5, color = "red", parent) => {
   if (x === undefined) {
     alert(`eg.sphere(x, y, z, size = .5, color = "red")`);
@@ -47,7 +63,7 @@ export const sphere = (x, y, z, size = .5, color = "red", parent) => {
   }
   const s = cr("a-sphere", parentOrScene(parent));
   s.setAttribute("position", { x, y, z });
-  s.setAttribute("color", color);
+  setColor(color);
   s.setAttribute("radius", size / 2);
   return s;
 };
@@ -58,7 +74,7 @@ export const box = (x, y, z, size = .5, color = "green", parent) => {
   }
   const s = cr("a-box", parentOrScene(parent));
   s.setAttribute("position", { x, y, z });
-  s.setAttribute("color", color);
+  setColor(s, color);
   s.setAttribute("width", size);
   s.setAttribute("height", size);
   s.setAttribute("depth", size);
@@ -119,7 +135,7 @@ export const textASCII = (s, x = 0, y = 0, z = 0, width = 1.0, color = "white", 
   //obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
   //obj.setAttribute("scale", { x: size, y: size, z: size });
   obj.setAttribute("width", size);
-  obj.setAttribute("color", color);
+  setColor(color);
   obj.setAttribute("align", align);
   return obj;
 };
@@ -160,7 +176,7 @@ export const plate = (x, y, z, w, h, color, parent) => {
   s.setAttribute("width", w);
   s.setAttribute("height", h);
   s.setAttribute("rotation", { x: 0, y: 0, z: 0 });
-  s.setAttribute("color", color);
+  setColor(s, color);
   return s;
 };
 
