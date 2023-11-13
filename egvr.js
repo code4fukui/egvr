@@ -10,6 +10,17 @@ scene.setAttribute("renderer", "colorManagement: true");
 export const camera = cr("a-camera");
 scene.appendChild(camera);
 
+// for controller event
+export const ctrl1 = cr("a-entity");
+ctrl1.setAttribute("laser-controls", "hand: left");
+ctrl1.setAttribute("vr-controller", "");
+scene.appendChild(ctrl1);
+
+export const ctrl2 = cr("a-entity");
+ctrl2.setAttribute("laser-controls", "hand: right");
+ctrl2.setAttribute("vr-controller", "");
+scene.appendChild(ctrl2);
+
 document.body.appendChild(scene);
 document.body.style.backgroundColor = "#181818";
 
@@ -138,6 +149,19 @@ export const image = (img, x, y, z, w = 0.5, h = 0.5, circle = false, parent) =>
     s.setAttribute("transparent", "true");
 		return s;
 	}
+};
+export const plate = (x, y, z, w, h, color, parent) => {
+  if (x === undefined) {
+    alert(`eg.plate(x, y, z, w = 0.5, h = 0.5)`);
+    return;
+  }
+  const s = cr("a-plane", parentOrScene(parent));
+  s.setAttribute("position", { x, y, z });
+  s.setAttribute("width", w);
+  s.setAttribute("height", h);
+  s.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+  s.setAttribute("color", color);
+  return s;
 };
 
 let skyobj = null;
