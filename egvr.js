@@ -4,8 +4,7 @@ export { waitClick } from "https://js.sabae.cc/waitClick.js";
 export { sleep } from "https://js.sabae.cc/sleep.js";
 
 export const scene = cr("a-scene");
-scene.setAttribute("renderer", "colorManagement: true");
-scene.setAttribute("renderer", "sortObjects: true");
+scene.setAttribute("renderer", "colorManagement: true; sortObjects: true");
 
 // camera
 export const camera = cr("a-camera");
@@ -63,7 +62,7 @@ export const sphere = (x, y, z, size = .5, color = "red", parent) => {
   }
   const s = cr("a-sphere", parentOrScene(parent));
   s.setAttribute("position", { x, y, z });
-  setColor(color);
+  setColor(s, color);
   s.setAttribute("radius", size / 2);
   return s;
 };
@@ -135,7 +134,7 @@ export const textASCII = (s, x = 0, y = 0, z = 0, width = 1.0, color = "white", 
   //obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
   //obj.setAttribute("scale", { x: size, y: size, z: size });
   obj.setAttribute("width", size);
-  setColor(color);
+  setColor(obj, color);
   obj.setAttribute("align", align);
   return obj;
 };
