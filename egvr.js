@@ -190,6 +190,18 @@ export const sky = (src, radius = 500, parent) => {
     sky.setAttribute("src", src);
     sky.setAttribute("radius", radius);  
     skyobj = sky;
+    
+    // unvisible if AR-mode
+    eg.scene.addEventListener("enter-vr", () => {
+      if (eg.scene.is("ar-mode")) {
+        sky.setAttribute("visible", false);
+      } else {
+        sky.setAttribute("visible", true);
+      }
+    });
+    eg.scene.addEventListener("exit-vr", () => {
+      sky.setAttribute("visible", bg);
+    });
   } else {
     skyobj.setAttribute("src", src);
   }
