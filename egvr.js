@@ -192,14 +192,14 @@ export const sky = (src, radius = 500, parent) => {
     skyobj = sky;
     
     // unvisible if AR-mode
-    eg.scene.addEventListener("enter-vr", () => {
-      if (eg.scene.is("ar-mode")) {
+    scene.addEventListener("enter-vr", () => {
+      if (scene.is("ar-mode")) {
         sky.setAttribute("visible", false);
       } else {
         sky.setAttribute("visible", true);
       }
     });
-    eg.scene.addEventListener("exit-vr", () => {
+    scene.addEventListener("exit-vr", () => {
       sky.setAttribute("visible", bg);
     });
   } else {
