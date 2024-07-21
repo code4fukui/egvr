@@ -3,8 +3,33 @@ export { cr, rgb, asset };
 export { waitClick } from "https://js.sabae.cc/waitClick.js";
 export { sleep } from "https://js.sabae.cc/sleep.js";
 
+// isVisionPro
+const supportsWebXR = "xr" in navigator;
+export const isVisionPro = () => supportsWebXR && navigator.userAgent.indexOf("Macintosh") >= 0 && navigator.userAgent.indexOf("Chrome") == -1;
+
+// encoding
+AFRAME.registerComponent('srgb-encoding', {
+  init: function () {
+    this.el.sceneEl.renderer.outputEncoding = THREE.sRGBEncoding;
+  }
+});
+
+AFRAME.registerComponent('fix-texture-encoding', {
+  init: function () {
+    this.el.addEventListener('model-loaded', () => {
+      this.el.object3D.traverse((child) => {
+        if (child.isMesh && child.material.map) {
+          child.material.map.encoding = THREE.sRGBEncoding;
+        }
+      });
+    });
+  }
+});
+//
+
 export const scene = cr("a-scene");
 scene.setAttribute("renderer", "colorManagement: true; sortObjects: true");
+scene.setAttribute("srgb-encoding", "");  // for encoding
 
 // camera
 export const camera = cr("a-camera");
@@ -96,9 +121,18 @@ export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1, paren
   const aid = typeof asset_or_url == "string" ? getAsset(asset_or_url) : asset_or_url;
   const obj = cr("a-entity", parentOrScene(parent));
   obj.setAttribute("gltf-model", aid);
+  obj.setAttribute("fix-texture-encoding", ""); // for encoding
   obj.setAttribute("position", { x, y, z });
   obj.setAttribute("rotation", { x: 0, y: ry, z: 0 });
   obj.setAttribute("scale", { x: size, y: size, z: size });
+  // set encoding
+  if (isVisionPro()) {
+    obj.object3D.traverse((child) => {
+      if (child.isMesh) {
+        child.material.map.encoding = THREE.sRGBEncoding;
+      }
+    });
+  }
   return obj;
 };
 export const text = (s, x, y, z, w = 1.0, color = "white", size = 128, parent) => {
@@ -178,6 +212,33 @@ export const plate = (x, y, z, w, h, color, parent) => {
   setColor(s, color);
   return s;
 };
+export const cone = (x, y, z, size, h, color, parent) => {
+  if (x === undefined) {
+    alert(`eg.cone(x, y, z, size = 0.5, h = 0.5)`);
+    return;
+  }
+  const s = cr("a-cone", parentOrScene(parent));
+  s.setAttribute("position", { x, y, z });
+  s.setAttribute("radius-bottom", size / 2);
+  s.setAttribute("radius-top", 0);
+  s.setAttribute("height", h);
+  s.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+  setColor(s, color);
+  return s;
+};
+export const cylinder = (x, y, z, size, h, color, parent) => {
+  if (x === undefined) {
+    alert(`eg.cylinder(x, y, z, size = 0.5, h = 0.5)`);
+    return;
+  }
+  const s = cr("a-cylinder", parentOrScene(parent));
+  s.setAttribute("position", { x, y, z });
+  s.setAttribute("radius", size / 2);
+  s.setAttribute("height", h);
+  s.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+  setColor(s, color);
+  return s;
+};
 
 let skyobj = null;
 export const sky = (src, radius = 500, parent) => {
@@ -209,7 +270,15 @@ export const sky = (src, radius = 500, parent) => {
 };
 
 export const help = () => {
-  alert("eg.sphere(x, y, z) / eg.box(x, y, z) / eg.line(x, y, z, dx, dy, dz)");
+  alert(`
+    eg.sphere(x, y, z)
+    eg.box(x, y, z)
+    eg.line(x, y, z, dx, dy, dz)
+    eg.plate(x, y, z, w, h)
+    eg.text(s, x, y, z, w)
+    eg.cone(x, y, z, size, h)
+    eg.cylinder(x, y, z, size, h)
+  `);
 };
 
 export const hsl = (h, s, l) => {
@@ -242,8 +311,8 @@ const hsl2rgb = (h, s, l) => {
   return { r: r * 255 >> 0, g: g * 255 >> 0, b: b * 255 >> 0 };
 };
 
-export const group = (x, y, z) => {
-  const c = cr("a-entity");
+export const group = (x, y, z, parent) => {
+  const c = cr("a-entity", parentOrScene(parent));
   if (x !== undefined) {
     c.setAttribute("position", { x, y, z });
   }
@@ -277,4 +346,8 @@ export const cls = () => {
   for (let i = 0; i < remlist.length; i++) {
     scene.removeChild(remlist[i]);
   }
+};
+
+export const rotation = (o, x = 0, y = 0, z = 0) => {
+  o.setAttribute("rotation", { x, y, z });
 };
