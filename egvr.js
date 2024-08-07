@@ -137,7 +137,7 @@ export const model = (asset_or_url, x = 0, y = 0, z = 0, ry = 0, size = 1, paren
 };
 export const text = (s, x, y, z, w = 1.0, color = "white", size = 128, parent) => {
   if (s === undefined) {
-    alert(`eg.text(s, y, z, width = 1.0, color = "white", size = 128)`);
+    alert(`eg.text(s, x, y, z, width = 1.0, color = "white", size = 128, parent)`);
     return;
   }
   const canvas = document.createElement("canvas");
