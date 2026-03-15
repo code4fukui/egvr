@@ -1,5 +1,7 @@
 # egvr.js
 
+> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
+
 A JavaScript library for creating 3D scenes and interactive content in the browser using A-Frame.
 
 ## Demo
