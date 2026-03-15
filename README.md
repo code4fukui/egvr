@@ -1,48 +1,31 @@
 # egvr.js
 
-## sample
+A JavaScript library for creating 3D scenes and interactive content in the browser using A-Frame.
 
+## Demo
 [DEMO](https://taisukef.github.io/vr-spiral/)
-```html
-<script type="module">
-import * as eg from "https://js.sabae.cc/egvr.js";
-
-for (let i = 0; i < 200; i++) {
-  const th = i / 3;
-  const r = 2 - i / 100 * 2;
-  const x = Math.cos(th) * r;
-  const y = Math.sin(th) * r;
-  const s = r / 4;
-  eg.sphere(x, i / 30, y, s, eg.rgb(i * 2, 0, 30));
-}
-</script>
-```
 
 [Interactive DEMO](https://code4fukui.github.io/egvr/interactive.html)
-```html
-<script type="module">
-import * as eg from "https://js.sabae.cc/egvr.js";
-
-;eg.box(0, .5, -5, 1, eg.hsl(180, 1, 0.5)).onclick = (e) => {
-  e.target.setAttribute("visible", !e.target.getAttribute("visible"));
-};
-
-eg.model("https://code4fukui.github.io/vr-kanazawa-it/kanta.glb", 1, 0, -5).onclick = (e) => {
-  e.target.setAttribute("position", { x: 1, y: 1, z: -5 });
-  setTimeout(() => {
-    e.target.setAttribute("position", { x: 1, y: 0, z: -5 });
-  }, 1000);
-};
-</script>
-```
 
 [Game DEMO](https://code4fukui.github.io/egvr/game.html)
 
-## slide
+## Features
+- Provides a set of functions for creating 3D objects like spheres, boxes, and models
+- Supports text rendering and image display
+- Includes utilities for handling user interactions and animations
 
-- [VR入門 PDF](https://code4fukui.github.io/egvr/VR-firststep.pdf)
+## Usage
+To use the library, import the `egvr.js` file and access the exported functions:
 
-## blog
+```html
+<script type="module">
+import * as eg from "https://js.sabae.cc/egvr.js";
 
-- [QuestでもWebAR解禁! 福井県高校にてVR入門、体験/検索/発想/創造](https://fukuno.jig.jp/3792)
-- [ディスプレイとして便利なARメガネ「Nreal Air」でキラキラな目を実現、高専JOINTフォーラムでも待望、スマートグラス](https://fukuno.jig.jp/3794)
+// Create 3D objects
+eg.sphere(0, 1.5, -1, .5, "red");
+eg.text("Hello", -.3, 2, -1.5);
+</script>
+```
+
+## License
+This project is licensed under the MIT License.
