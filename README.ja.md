@@ -1,6 +1,6 @@
 # egvr.js
 
-egvr.jsは、WebVRを利用してシンプルで簡単にVRコンテンツを作成できるライブラリです。
+egvr.jsは、A-Frameを使用して、ブラウザ上で簡単に3Dシーンやインタラクティブなコンテンツを作成できるJavaScriptライブラリです。
 
 ## デモ
 [DEMO](https://taisukef.github.io/vr-spiral/)では、簡単なスパイラル表現を見ることができます。

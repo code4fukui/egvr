@@ -6,9 +6,7 @@ A JavaScript library for creating 3D scenes and interactive content in the brows
 
 ## Demo
 [DEMO](https://taisukef.github.io/vr-spiral/)
-
 [Interactive DEMO](https://code4fukui.github.io/egvr/interactive.html)
-
 [Game DEMO](https://code4fukui.github.io/egvr/game.html)
 
 ## Features
@@ -30,4 +28,4 @@ eg.text("Hello", -.3, 2, -1.5);
 ```
 
 ## License
-This project is licensed under the MIT License.
+MIT License — see [LICENSE](LICENSE).
