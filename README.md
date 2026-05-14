@@ -1,48 +1,79 @@
 # egvr.js
 
-## sample
+> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
 
-[DEMO](https://taisukef.github.io/vr-spiral/)
+A lightweight JavaScript library for creating 3D scenes and interactive WebXR content on top of A-Frame.
+
+## Demos
+
+- **[Spiral](https://taisukef.github.io/vr-spiral/)**: A simple spiral animation.
+- **[Interactive](https://code4fukui.github.io/egvr/interactive.html)**: Click on objects with a mouse or VR controller to trigger actions.
+- **[Game](https://code4fukui.github.io/egvr/game.html)**: A simple "click the sphere" reaction game.
+
+## Features
+
+- **Minimalist API**: Create entire 3D scenes with simple function calls. No HTML tags required.
+- **3D Primitives**: Easily create `sphere`, `box`, `cone`, `cylinder`, `plate`, and `line` objects.
+- **Asset Loading**: Display `glTF` 3D models, images, and 360° `sky` backgrounds. Includes automatic texture encoding fixes for platforms like Vision Pro.
+- **Text Rendering**: High-quality text with full Unicode support via `eg.text()`, and a fast, basic `eg.textASCII()`.
+- **Built-in Interaction**: Automatically handles mouse, Oculus Quest, and HTC Vive controller inputs. Add event handlers like `.onclick` to any created object.
+- **Async Control Flow**: Use `await eg.waitClick()` and `await eg.sleep()` to easily script animations and game logic.
+- **Scene Hierarchy**: Nest objects by passing a `parent` entity to creation functions.
+
+## Quick Start
+
+Create an `index.html` file and add the following. The library automatically sets up the A-Frame scene, camera, and controllers.
+
 ```html
-<script type="module">
-import * as eg from "https://js.sabae.cc/egvr.js";
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>egvr.js Quick Start</title>
+  </head>
+  <body>
+    <script type="module">
+      import * as eg from "https://js.sabae.cc/egvr.js";
 
-for (let i = 0; i < 200; i++) {
-  const th = i / 3;
-  const r = 2 - i / 100 * 2;
-  const x = Math.cos(th) * r;
-  const y = Math.sin(th) * r;
-  const s = r / 4;
-  eg.sphere(x, i / 30, y, s, eg.rgb(i * 2, 0, 30));
-}
-</script>
+      // Add a box that changes color on click
+      const box = eg.box(0, 1.6, -3, 1, "blue");
+      box.onclick = () => {
+        const newColor = box.getAttribute("color") === "blue" ? "orange" : "blue";
+        box.setAttribute("color", newColor);
+      };
+
+      // Add a 3D model
+      eg.model("https://code4fukui.github.io/vr-kanazawa-it/kanta.glb", 1.5, 1, -3);
+
+      // Add some text
+      eg.text("Hello VR!", -1.5, 1.6, -3);
+    </script>
+  </body>
+</html>
 ```
 
-[Interactive DEMO](https://code4fukui.github.io/egvr/interactive.html)
-```html
-<script type="module">
-import * as eg from "https://js.sabae.cc/egvr.js";
+## API Reference
 
-;eg.box(0, .5, -5, 1, eg.hsl(180, 1, 0.5)).onclick = (e) => {
-  e.target.setAttribute("visible", !e.target.getAttribute("visible"));
-};
+All object creation functions accept an optional `parent` entity as the last argument to create nested hierarchies.
 
-eg.model("https://code4fukui.github.io/vr-kanazawa-it/kanta.glb", 1, 0, -5).onclick = (e) => {
-  e.target.setAttribute("position", { x: 1, y: 1, z: -5 });
-  setTimeout(() => {
-    e.target.setAttribute("position", { x: 1, y: 0, z: -5 });
-  }, 1000);
-};
-</script>
-```
+### Scene Objects
+- `eg.sphere(x, y, z, size, color, parent)`
+- `eg.box(x, y, z, size, color, parent)`
+- `eg.cone(x, y, z, size, height, color, parent)`
+- `eg.cylinder(x, y, z, size, height, color, parent)`
+- `eg.plate(x, y, z, width, height, color, parent)`
+- `eg.line(x1, y1, z1, dx, dy, dz, color, parent)`
+- `eg.model(url, x, y, z, rotationY, scale, parent)`
+- `eg.image(url, x, y, z, width, height, isCircle, parent)`
+- `eg.text(string, x, y, z, width, color, fontSize, parent)`
+- `eg.textASCII(string, x, y, z, width, color, align, parent)`
+- `eg.sky(url, radius)`
 
-[Game DEMO](https://code4fukui.github.io/egvr/game.html)
+### Utilities
+- `await eg.sleep(milliseconds)`: Pauses execution.
+- `await eg.waitClick(object)`: Pauses execution until the specified object (or the scene background) is clicked.
+- `eg.rgb(r, g, b)` / `eg.hsl(h, s, l)`: Color helper functions.
 
-## slide
+## License
 
-- [VR入門 PDF](https://code4fukui.github.io/egvr/VR-firststep.pdf)
-
-## blog
-
-- [QuestでもWebAR解禁! 福井県高校にてVR入門、体験/検索/発想/創造](https://fukuno.jig.jp/3792)
-- [ディスプレイとして便利なARメガネ「Nreal Air」でキラキラな目を実現、高専JOINTフォーラムでも待望、スマートグラス](https://fukuno.jig.jp/3794)
+MIT License - see [LICENSE](LICENSE).
